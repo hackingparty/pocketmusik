@@ -36,15 +36,18 @@ object Application extends Controller {
   		listFiles(".")
   	}
 
-  	def listFile( path: String ) = Action { request =>
+  	def listFile( path: String) = Action { request =>
   		listFiles(path)
   	}
 
-  	private def listFiles( path: String ) = {
+  	private def listFiles( path: String, listHidden : Boolean = false) = {
   		val folder = new File(rootPath, path)
     	val response = (folder.exists, folder.isDirectory) match{
     		case (true, true) => {
-   				Ok( Json.toJson( folder.listFiles.map( FileInfo(path, _).toJson )) )
+          if(listHidden)
+            Ok( Json.toJson( folder.listFiles.map( FileInfo(path, _).toJson )) )
+          else
+            Ok( Json.toJson( folder.listFiles.filter({ f => !f.getName.startsWith(".")}).map( FileInfo(path, _).toJson )) )
     		}
     		case _ => NotFound
     	}
@@ -52,7 +55,7 @@ object Application extends Controller {
   	}
   
   	def servFile( path: String ) = Action { request =>
-		val fileToServe = new File(rootPath, path)
+  		val fileToServe = new File(rootPath, path)
 	    val response = (fileToServe.exists, fileToServe.isDirectory) match {
 	    	case (true, false) => Ok.sendFile(fileToServe, inline = true)
 	    	case _ => NotFound
