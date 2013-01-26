@@ -40,19 +40,20 @@ object Application extends Controller {
   		listFiles(path)
   	}
 
-  	private def listFiles( path: String, listHidden : Boolean = false) = {
+  	private def listFiles( path: String, listHidden : Boolean = false): SimpleResult[_] = {
   		val folder = new File(rootPath, path)
     	val response = (folder.exists, folder.isDirectory) match{
-    		case (true, true) => {
-          if(listHidden)
-            Ok( Json.toJson( folder.listFiles.map( FileInfo(path, _).toJson )) )
-          else
-            Ok( Json.toJson( folder.listFiles.filter({ f => !f.getName.startsWith(".")}).map( FileInfo(path, _).toJson )) )
-    		}
+    		case (true, true) => Ok( Json.toJson( listFiles(path, folder, listHidden).map(_.toJson) ) )
     		case _ => NotFound
     	}
     	response.withHeaders(headers)  		
   	}
+
+    private def listFiles( path: String, folder: File, listHidden : Boolean ) : Seq[FileInfo] = {
+      folder.listFiles.filter({ f =>
+        ( listHidden || !f.getName.startsWith(".") ) && ( f.isDirectory && !f.listFiles.isEmpty )
+      }).map( FileInfo(path, _) )
+    }
   
   	def servFile( path: String ) = Action { request =>
   		val fileToServe = new File(rootPath, path)
