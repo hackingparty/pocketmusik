@@ -3,9 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-GET     /list               		controllers.Application.listRootFile
-GET     /list/*path               	controllers.Application.listFile(path: String)
+GET     /                           controllers.Application.home
+GET     /index                      controllers.Application.index
+GET     /list                       controllers.Application.listRootFile
+GET     /list/*path                 controllers.Application.listFile(path: String)
 GET     /musik/*path                controllers.Application.servFile(path: String)
 
 # Map static resources from the /public folder to the /assets URL path
