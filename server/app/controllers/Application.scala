@@ -67,7 +67,7 @@ object Application extends Controller {
 
     private def listFiles( path: String, directory: File, listHidden : Boolean ) : Seq[FileInfo] = {
       directory.listFiles.filter({ f =>
-        ( listHidden || !f.getName.startsWith(".") ) && ( f.isDirectory && !f.listFiles.isEmpty )
+        ( listHidden || !f.getName.startsWith(".") ) && ( !f.isDirectory || !f.listFiles.isEmpty )
       }).map( FileInfo(path, _) )
     }
   
