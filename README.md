@@ -31,3 +31,17 @@ $ ANDROID_HOME=/path/to/android-sdk-linux ./client/cordova/BOOM
 
 = Server =
 
+Retrieve Play framework:
+
+```
+$ wget http://download.playframework.org/releases/play-2.1-RC2.zip
+$ unzip play*.zip
+```
+
+Run the server for a given path:
+
+```
+$ POCKET_MUSIK_PATH=/path/to/your/musik/library ./play*/play
+```
+
+
