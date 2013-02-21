@@ -1,14 +1,16 @@
 package com.phonegap.plugins.downloader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.DownloadManager;
 import android.net.Uri;
 
 import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 
 public class Downloader extends Plugin {
 
@@ -34,17 +36,18 @@ public class Downloader extends Plugin {
 		}
 	}
 
-	private PluginResult downloadUrl(String fileUrl, String dirName, String fileName ) {
-		DownloadManager.Request r = new DownloadManager.Request( Uri.parse(Uri.encode(fileUrl, "/:")) );
+	private PluginResult downloadUrl(String fileUrl, String dirName, String fi             leName ) {
+		if( !new File(String.format("/sdcard%s/%s", dirName, fileName)).exists() ){
+			DownloadManager.Request r = new DownloadManager.Request( Uri.parse(Uri.encode(fileUrl, "/:")) );
 
-		r. setDestinationInExternalPublicDir( dirName, fileName );
-		r.allowScanningByMediaScanner();
-		r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+			r. setDestinationInExternalPublicDir( dirName, fileName );
+			r.allowScanningByMediaScanner();
+			r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
-		DownloadManager dm = (DownloadManager) cordova.getActivity()
-			.getSystemService(android.content.Context.DOWNLOAD_SERVICE);
-		dm.enqueue(r);
-
+			DownloadManager dm = (DownloadManager) cordova.getActivity()
+				.getSystemService(android.content.Context.DOWNLOAD_SERVICE);
+			dm.enqueue(r);
+		}
 		return new PluginResult(PluginResult.Status.OK, "yeah");
 	}
 }
