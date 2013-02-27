@@ -36,7 +36,7 @@ public class Downloader extends Plugin {
 		}
 	}
 
-	private PluginResult downloadUrl(String fileUrl, String dirName, String fi             leName ) {
+	private PluginResult downloadUrl(String fileUrl, String dirName, String fileName ) {
 		if( !new File(String.format("/sdcard%s/%s", dirName, fileName)).exists() ){
 			DownloadManager.Request r = new DownloadManager.Request( Uri.parse(Uri.encode(fileUrl, "/:")) );
 
