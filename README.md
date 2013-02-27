@@ -19,13 +19,19 @@ But that's optional, you can also pass for following command an ANDROID_HOME env
 In order to install the client to your device, execute:
 
 ```
-$ ./client/cordova/BOOM
+$ ./client/cordova/run
 ```
 
 -or, if you haven't launched update your configuration files-
 
 ```
-$ ANDROID_HOME=/path/to/android-sdk-linux ./client/cordova/BOOM
+$ ANDROID_HOME=/path/to/android-sdk-linux ./client/cordova/run
+```
+
+Add Phonegap.js to the assets (but do not commit it). 
+
+```
+$ cp phonegap.js client/assets/www/
 ```
 
 
