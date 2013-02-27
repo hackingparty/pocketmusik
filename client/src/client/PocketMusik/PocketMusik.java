@@ -19,7 +19,6 @@
 
 package client.PocketMusik;
 
-import android.app.Activity;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
@@ -29,7 +28,7 @@ public class PocketMusik extends DroidGap
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        super.loadUrl("file:///android_asset/www/index.html");
+        super.loadUrl(Config.getStartUrl());
     }
 }
 
