@@ -24,7 +24,6 @@ case class FileInfo(path: String, name: String, isDirectory: Boolean){
   lazy val toJson: JsValue = Json.obj(
     "path" -> path,
     "name" -> name,
-    "hash" -> hash,
     "isDirectory" -> isDirectory
   ) 
 }
